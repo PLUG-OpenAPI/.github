@@ -102,8 +102,11 @@ python snippets/krstock/current_price/chk_current_price.py
 
 전 종목 코드·종목명·업종·지수편입 등 **정적 종목정보는 REST API 가 아니라 마스터 파일(.mst)** 로 제공합니다. **28종**(국내·해외주식, 국내선물옵션, 해외파생, 장내채권).
 
-- **구조체 정의** — `https://www.nhplug.com/instruments/<파일명>.h` (N2: `www.n2plug.com`)
-  마스터와 **1:1 대응** · 오프셋·길이·코드값 · 파이썬 파서 코드 내장 · **인증 불필요**
+- **마스터 파일** — `https://www.nhplug.com/instruments/<파일명>.mst` (N2: `www.n2plug.com`)
+- **구조체 정의** — `https://www.nhplug.com/instruments/<파일명>.h`
+  마스터와 **1:1 대응**(`m_new_stock.mst` → `m_new_stock.h`) · 오프셋·길이·코드값 · **파이썬 파서 코드 내장**
+- **둘 다 인증 불필요** — 토큰·헤더 없이 공개 다운로드
+- **파이썬으로 바로 쓰기** — `pip install "nhplug[instruments]"` → `load_master("m_new_stock")`
   
 ---
 
