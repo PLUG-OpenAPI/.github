@@ -36,8 +36,22 @@
 
 > 세 가지는 경쟁이 아니라 **단계**입니다. 대화로 확인해 보고 → 예제로 익히고 → 내 프로그램에 넣는 흐름이 자연스럽습니다.
 
-> ⚠️ **기본 접속 환경은 운영(`api`)이며 주문이 실제로 체결됩니다.**
-> 개발·검증은 **모의투자(`moapi.nhplug.com:8443`)** 로 전환해서 진행하세요.
+### 접속 환경
+
+| 환경 | 주소 | 용도 |
+|---|---|---|
+| 🔴 **운영 (기본)** | `api.nhplug.com:8443` | 실제 시세·잔고·주문. **주문이 실제로 체결됩니다.** |
+| 🟢 모의투자 | `moapi.nhplug.com:8443` | **교육이수 · 개발·테스트 · 시뮬레이션** |
+
+> ⚠️ 별도 설정이 없으면 **운영에 접속합니다.** 시세·잔고 조회는 그대로 쓰시면 되고,
+> **주문 코드를 개발·테스트할 때는 모의투자(`moapi`)로 전환**해서 진행하세요.
+>
+> 전환은 `NHPLUG_BASE_URL` 한 줄입니다.
+> ```
+> NHPLUG_BASE_URL=https://moapi.nhplug.com:8443
+> ```
+> 접근토큰(`/oauth2/token`)은 **운영 전용**이라 `NHPLUG_AUTH_URL` 은 그대로 두세요.
+> 호출이 모의투자여도 토큰은 운영에서 발급됩니다.
 
 ---
 
@@ -56,6 +70,10 @@ Claude Desktop 설정에 붙여넣고 **완전히 종료 후 재실행**하세�
 
 Claude에게 **"삼성전자 현재가 알려줘"** 라고 하면 시세가 나옵니다.
 
+> **개발·테스트용 모의투자**로 붙이려면 `env` 에 한 줄을 추가하세요 —
+> `"NHPLUG_BASE_URL": "https://moapi.nhplug.com:8443"`
+> MCP 는 안전 기본값으로 **주문 도구가 꺼져 있습니다**(`NHPLUG_ENABLE_TRADING=false`).
+
 ### ② 코드로 (Python)
 
 ```bash
@@ -72,6 +90,9 @@ load_master("m_new_stock")     # 전 종목 마스터 (자동 다운로드·캐�
 
 인증·토큰 캐시(24시간)·에러 판정이 모두 포함되어 있어 직접 짜실 필요가 없습니다.
 
+> 🔒 접속 주소에 오타가 있으면 **호출하기 전에** 막고 비슷한 이름을 알려줍니다.
+> 앱키·시크릿이 엉뚱한 서버로 전송되는 것을 방지합니다.
+
 ### ③ 예제 보며 (clone)
 
 ```bash
@@ -81,7 +102,7 @@ python snippets/krstock/current_price/chk_current_price.py
 ```
 
 ```
-✅ 삼성전자 212,500원
+✅ 삼성전자 231,000원        ← 예시. 실제 시세가 출력됩니다
 ```
 이렇게 나오면 준비 완료입니다.
 
@@ -107,7 +128,8 @@ python snippets/krstock/current_price/chk_current_price.py
   마스터와 **1:1 대응**(`m_new_stock.mst` → `m_new_stock.h`) · 오프셋·길이·코드값 · **파이썬 파서 코드 내장**
 - **둘 다 인증 불필요** — 토큰·헤더 없이 공개 다운로드
 - **파이썬으로 바로 쓰기** — `pip install "nhplug[instruments]"` → `load_master("m_new_stock")`
-  
+  파서가 위 구조체 파일을 **자동으로 받아** 쓰므로, 구조가 개정돼도 패키지를 업데이트할 필요가 없습니다.
+
 ---
 
 ## 저장소
@@ -126,9 +148,10 @@ python snippets/krstock/current_price/chk_current_price.py
 **나무(Namuh)=`nhplug.com` / N2=`n2plug.com`.** API·저장소·패키지는 **공용**이며 접속 도메인만 다릅니다. 본인 브랜드의 도메인과 키를 사용하세요.
 
 > N2 고객은 `.env` 의 세 줄(`NHPLUG_BASE_URL`·`NHPLUG_AUTH_URL`·`NHPLUG_INSTRUMENTS_BASE`)을 **모두** n2plug 로 바꾸세요.
+> 하나라도 빠지면 그 기능만 조용히 나무 도메인으로 갑니다.
 
 **공식 여부 확인**: 이 계정과 저장소는 포털에서 상호 링크됩니다. 앱키/앱시크릿은 계좌 접근 권한이므로 **반드시 포털에서 발급한 자격증명만** 사용하세요.
 
 ---
 
-<sub>⚠️ 자동매매·주문 기능은 실제 손실이 발생할 수 있습니다. 반드시 모의투자(moapi) 환경에서 검증 후 사용하시고, 실거래 적용은 이용자 책임입니다. · MIT License · © NH Investment & Securities Co., Ltd.</sub>
+<sub>⚠️ 자동매매·주문 기능은 실제 손실이 발생할 수 있습니다. 반드시 모의투자(`moapi`) 환경에서 검증한 뒤 사용하시고, 실거래 적용은 이용자 책임입니다. · MIT License · © NH Investment & Securities Co., Ltd.</sub>
