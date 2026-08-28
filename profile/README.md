@@ -112,7 +112,7 @@ python snippets/krstock/current_price/chk_current_price.py
 
 1. **명세 정본** — [llms.txt](https://www.nhplug.com/llms.txt) (N2: [n2plug.com/llms.txt](https://www.n2plug.com/llms.txt))
    전체 문맥이 한 번에 필요하면 [llms-full.txt](https://www.nhplug.com/llms-full.txt) (약 160KB)
-2. **규칙 파일** — [templates/](https://github.com/PLUG-OpenAPI/nhplug-sdk/tree/main/templates) 를 프로젝트에 넣으세요
+2. **규칙 파일** — [templates/](https://github.com/PLUG-OpenAPI/nhplug-sdk/blob/main/templates/README.md) 를 프로젝트에 넣으세요
    Antigravity·Codex → `AGENTS.md` · Claude Code → `CLAUDE.md` · **Cursor → `.cursor/rules/nhplug.mdc`**
 3. **IDE 가이드** — [Antigravity·Cursor 로 바이브코딩하기](https://github.com/PLUG-OpenAPI/nhplug-sdk/blob/main/guides/antigravity.md)
 4. ⚠️ **호출 식별자 주의** — Python SDK 는 **URI 경로**(`/krstock/quote/v1/currentPrice`), MCP 는 **operationId**(`krstockQuoteCurrentPrice`). **섞어 쓰면 동작하지 않습니다.**
