@@ -21,7 +21,7 @@
 
 | 쓸 것 | 필요한 것 |
 |---|---|
-| Python SDK | **Python 3.11 이상** (`python --version`) |
+| Python SDK | **Python 3.10 이상** (`python --version`) |
 | MCP (대화형) | **Node.js 18 이상** (`node -v`) + Claude Desktop |
 
 ---
